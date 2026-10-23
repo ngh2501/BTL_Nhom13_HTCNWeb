@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Giỏ hàng - [Tên shop]</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+/* style.css TẠM của C để xem giỏ hàng.*/
+:root { --accent: #FF6A00; --text: #2D2D2D; }
+body { color: var(--text); font-family: "Segoe UI", Arial, sans-serif; }
+.text-accent { color: var(--accent); }
+.btn-accent { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-accent:hover { background: #e55f00; border-color: #e55f00; color: #fff; }
+.cart-img { width: 64px; height: 64px; object-fit: cover; }
+.cart-qty { width: 120px; }
+    </style>
+</head>
+<body>
+    <!-- TẠM: thay toàn bộ khối header này bằng navbar mẫu của A -->
+    <header class="navbar navbar-expand-lg bg-white border-bottom shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">[Tên shop]</a>
+            <nav>
+                <a class="me-3" href="sanpham.html">Sản phẩm</a>
+                <a class="me-3" href="tintuc.html">Tin tức</a>
+                <a href="giohang.html">Giỏ hàng</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container my-4">
+        <h1 class="h3 mb-4">Giỏ hàng của bạn</h1>
+        <div id="cart-content"></div>
+    </main>
+
+    <!-- TẠM: thay bằng footer mẫu của A -->
+    <footer class="bg-light border-top py-3 text-center">
+        <small>Bố cục tham khảo từ maxxsport.com.vn, đã chỉnh sửa. <a href="sitemap.html">Sơ đồ website</a></small>
+    </footer>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        khoiTaoGioHang();
+    </script>
+</body>
+</html>
