@@ -1,6 +1,3 @@
-/* cart.js - Thành viên C: giỏ hàng
-   Key LocalStorage: cart = [{ id, qty }]  (tên và giá lấy lại từ products) */
-
 function layGio() {
     try {
         var gio = JSON.parse(localStorage.getItem("cart"));
