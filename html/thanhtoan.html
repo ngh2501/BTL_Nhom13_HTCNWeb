@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh toán và xác nhận đơn hàng - SportPro Store</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar text-center">
+    <div class="container d-flex justify-content-between">
+      <span>Giao hàng miễn phí toàn quốc đơn từ 500k</span>
+      <span>Đổi trả dễ dàng trong 7 ngày</span>
+      <span>Cam kết 100% dụng cụ chính hãng</span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-danger fs-3" href="index.html">SportPro</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Dụng cụ thể thao</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="sanpham.html?loai=bongda">Bóng đá</a></li>
+              <li><a class="dropdown-item" href="sanpham.html?loai=caulong">Cầu lông</a></li>
+              <li><a class="dropdown-item" href="sanpham.html?loai=tennis">Tennis</a></li>
+              <li><a class="dropdown-item" href="sanpham.html?loai=chaybo">Chạy bộ</a></li>
+              <li><a class="dropdown-item" href="sanpham.html?loai=tapluyen">Tập gym & Yoga</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item fw-bold" href="sanpham.html">Xem tất cả sản phẩm</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="tintuc.html">Tin tức</a></li>
+          <li class="nav-item"><a class="nav-link" href="gioithieu.html">Giới thiệu</a></li>
+          <li class="nav-item"><a class="nav-link" href="lienhe.html">Liên hệ</a></li>
+        </ul>
+
+        <form class="d-flex me-3" action="sanpham.html" method="GET">
+          <input class="form-control me-2" type="search" name="search" placeholder="Tìm bóng, vợt, tạ...">
+          <button class="btn btn-outline-danger" type="submit">Tìm</button>
+        </form>
+
+        <div class="d-flex align-items-center gap-3">
+          <a href="giohang.html" class="btn btn-outline-dark position-relative">
+            Giỏ hàng
+            <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+          </a>
+          <div id="user-area" class="d-flex gap-2">
+            <a href="dangnhap.html" class="btn btn-orange btn-sm">Đăng nhập</a>
+            <a href="dangky.html" class="btn btn-outline-secondary btn-sm">Đăng ký</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="container my-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none text-secondary">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="giohang.html" class="text-decoration-none text-secondary">Giỏ hàng</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
+      </ol>
+    </nav>
+
+    <h3 class="fw-bold border-start border-4 border-danger ps-3 mb-4">Thanh Toán</h3>
+
+    <!-- Thông báo: chưa đăng nhập hoặc giỏ trống -->
+    <div id="checkout-notice" class="text-center py-5 d-none"></div>
+
+    <!-- Form thanh toán + tóm tắt đơn -->
+    <div id="checkout-main" class="row mb-5 d-none">
+      <div class="col-lg-7 mb-4">
+        <form id="checkout-form" novalidate>
+          <h5 class="fw-bold mb-3">Thông tin nhận hàng</h5>
+
+          <div class="mb-3">
+            <label for="receiver" class="form-label">Họ và tên người nhận</label>
+            <input type="text" class="form-control" id="receiver" name="receiver" autocomplete="name">
+            <div class="invalid-feedback" id="error-receiver"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="phone" class="form-label">Số điện thoại</label>
+            <input type="tel" class="form-control" id="phone" name="phone" autocomplete="tel">
+            <div class="invalid-feedback" id="error-phone"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="address" class="form-label">Địa chỉ nhận hàng</label>
+            <input type="text" class="form-control" id="address" name="address" autocomplete="street-address">
+            <div class="invalid-feedback" id="error-address"></div>
+          </div>
+
+          <fieldset class="mb-3">
+            <legend class="form-label fs-6">Hình thức thanh toán</legend>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="payment" id="pay-cod" value="cod" checked>
+              <label class="form-check-label" for="pay-cod">Thanh toán khi nhận hàng (COD)</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="payment" id="pay-bank" value="bank">
+              <label class="form-check-label" for="pay-bank">Chuyển khoản ngân hàng</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="payment" id="pay-wallet" value="wallet">
+              <label class="form-check-label" for="pay-wallet">Ví điện tử</label>
+            </div>
+            <div class="invalid-feedback" id="error-payment"></div>
+          </fieldset>
+
+          <button type="submit" class="btn btn-orange px-4">Xác nhận đặt hàng</button>
+        </form>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="filter-box">
+          <h5>Đơn hàng của bạn</h5>
+          <div id="order-summary"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Xác nhận đặt hàng thành công -->
+    <div id="checkout-success" class="mb-5 d-none"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <h5 class="fw-bold text-danger">SportPro Store</h5>
+          <p class="small text-secondary">Chuyên cung cấp dụng cụ, thiết bị thể thao chính hãng.</p>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h6>Chính sách</h6>
+          <ul class="list-unstyled small">
+            <li><a href="#" class="text-decoration-none text-secondary">Chính sách bảo hành</a></li>
+            <li><a href="#" class="text-decoration-none text-secondary">Chính sách đổi trả</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h6>Liên kết nhanh</h6>
+          <ul class="list-unstyled small">
+            <li><a href="sanpham.html" class="text-decoration-none text-secondary">Sản phẩm</a></li>
+            <li><a href="sitemap.html" class="text-decoration-none text-secondary">Sơ đồ Website</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h6>Đăng ký nhận tin</h6>
+          <input type="email" class="form-control form-control-sm mb-2" placeholder="Email của bạn...">
+          <button class="btn btn-orange btn-sm w-100">Gửi</button>
+        </div>
+      </div>
+      <hr>
+      <p class="text-center small text-muted mb-0">Bố cục tham khảo từ maxxsport.com.vn, đã chỉnh sửa. Bài Tập Lớn Môn Hệ Thống & Công Nghệ Web - IUH.</p>
+    </div>
+  </footer>
+
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/bootstrap.bundle.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/common.js"></script>
+  <script src="../js/cart.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      khoiTaoThanhToan();
+    });
+  </script>
+</body>
+</html>

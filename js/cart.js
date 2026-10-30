@@ -1,3 +1,6 @@
+/* cart.js - Thành viên C: giỏ hàng
+   Key LocalStorage: cart = [{ id, qty }]  (tên và giá lấy lại từ products) */
+
 function layGio() {
     try {
         var gio = JSON.parse(localStorage.getItem("cart"));
@@ -9,9 +12,9 @@ function layGio() {
 
 function luuGio(gio) {
     localStorage.setItem("cart", JSON.stringify(gio));
-    /* Báo cho navbar cập nhật số lượng (hàm này do B viết trong common.js, chưa có thì bỏ qua) */
-    if (typeof capNhatSoLuongGio === "function") {
-        capNhatSoLuongGio();
+    /* Báo cho navbar (common.js của B) cập nhật số lượng trên biểu tượng giỏ hàng */
+    if (typeof window !== "undefined" && typeof Event === "function") {
+        window.dispatchEvent(new Event("sportpro:cart-change"));
     }
 }
 
@@ -166,4 +169,191 @@ function khoiTaoGioHang() {
         }
     });
     hienGioHang();
+}
+
+/* ===================== THANH TOÁN (thanhtoan.html) ===================== */
+
+var PHI_VAN_CHUYEN = 30000;
+var MIEN_PHI_TU = 500000;
+var TEN_THANH_TOAN = {
+    cod: "Thanh toán khi nhận hàng (COD)",
+    bank: "Chuyển khoản ngân hàng",
+    wallet: "Ví điện tử"
+};
+
+/* B lưu currentUser dạng JSON.stringify(username), ví dụ "\"huy123\"" nên phải JSON.parse */
+function layTenDangNhap() {
+    var raw = localStorage.getItem("currentUser");
+    if (!raw) { return ""; }
+    try {
+        var v = JSON.parse(raw);
+        return typeof v === "string" ? v : "";
+    } catch (e) {
+        return raw;
+    }
+}
+
+/* Trả về tài khoản đang đăng nhập (lấy từ users), hoặc null nếu chưa đăng nhập */
+function layNguoiDung() {
+    var ten = layTenDangNhap();
+    if (!ten) { return null; }
+    var ds = [];
+    try { ds = JSON.parse(localStorage.getItem("users")) || []; } catch (e) {}
+    var u = ds.filter(function (x) { return x && String(x.username).toLowerCase() === ten.toLowerCase(); })[0];
+    return u || { username: ten };
+}
+
+function phiVanChuyen(tienHang) {
+    return (tienHang <= 0 || tienHang >= MIEN_PHI_TU) ? 0 : PHI_VAN_CHUYEN;
+}
+
+/* Kiểm tra form thanh toán, trả về object lỗi (rỗng = hợp lệ) */
+function kiemTraThanhToan(v) {
+    var loi = {};
+    if (!/^\p{Lu}\p{L}*(?:\s+\p{Lu}\p{L}*)+$/u.test(v.receiver)) {
+        loi.receiver = "Cần ít nhất 2 từ, mỗi từ viết hoa chữ cái đầu.";
+    }
+    if (!/^(09|03|07|06|05|04)\d{8}$/.test(v.phone)) {
+        loi.phone = "Phải có 10 số, bắt đầu bằng 09, 03, 07, 06, 05 hoặc 04.";
+    }
+    if (v.address.length < 5) {
+        loi.address = "Vui lòng nhập địa chỉ nhận hàng (ít nhất 5 ký tự).";
+    }
+    if (!TEN_THANH_TOAN[v.payment]) {
+        loi.payment = "Vui lòng chọn hình thức thanh toán.";
+    }
+    return loi;
+}
+
+function taoMaDon() {
+    var d = new Date();
+    var p = function (n) { return (n < 10 ? "0" : "") + n; };
+    return "DH" + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + "-" + Math.floor(1000 + Math.random() * 9000);
+}
+
+/* Tạo đơn hàng từ giỏ, lưu vào orders và xóa giỏ. Trả về đơn, hoặc null nếu giỏ trống. */
+function datHang(tt) {
+    var ds = layChiTietGio();
+    if (ds.length === 0) { return null; }
+    var tienHang = ds.reduce(function (t, d) { return t + d.thanhTien; }, 0);
+    var don = {
+        orderId: taoMaDon(),
+        username: layTenDangNhap(),
+        items: ds.map(function (d) { return { id: d.id, name: d.name, price: d.price, qty: d.qty }; }),
+        total: tienHang + phiVanChuyen(tienHang),
+        receiver: tt.receiver,
+        phone: tt.phone,
+        address: tt.address,
+        payment: tt.payment,
+        date: new Date().toISOString()
+    };
+    var orders = [];
+    try { orders = JSON.parse(localStorage.getItem("orders")) || []; } catch (e) {}
+    orders.push(don);
+    localStorage.setItem("orders", JSON.stringify(orders));
+    luuGio([]);
+    return don;
+}
+
+function hienThongBaoThanhToan(noiDung, nutHref, nutChu) {
+    var tb = document.getElementById("checkout-notice");
+    tb.innerHTML = '<p class="fs-5">' + noiDung + '</p><a href="' + nutHref + '" class="btn btn-orange">' + nutChu + '</a>';
+    tb.classList.remove("d-none");
+    document.getElementById("checkout-main").classList.add("d-none");
+}
+
+function hienTomTatDon() {
+    var ds = layChiTietGio();
+    var tienHang = ds.reduce(function (t, d) { return t + d.thanhTien; }, 0);
+    var phi = phiVanChuyen(tienHang);
+    var h = '<ul class="list-unstyled mb-3">';
+    ds.forEach(function (d) {
+        h += '<li class="d-flex justify-content-between gap-3 border-bottom py-2">' +
+             '<span>' + thoatHtml(d.name) + ' <span class="text-muted">× ' + d.qty + '</span></span>' +
+             '<span class="text-nowrap">' + dinhDangGia(d.thanhTien) + '</span></li>';
+    });
+    h += '</ul>' +
+         '<div class="d-flex justify-content-between mb-1"><span>Tạm tính</span><span>' + dinhDangGia(tienHang) + '</span></div>' +
+         '<div class="d-flex justify-content-between mb-2"><span>Phí vận chuyển</span><span>' +
+         (phi === 0 ? "Miễn phí" : dinhDangGia(phi)) + '</span></div>' +
+         '<div class="d-flex justify-content-between fs-5 fw-bold border-top pt-2"><span>Tổng thanh toán</span>' +
+         '<span class="price-new">' + dinhDangGia(tienHang + phi) + '</span></div>' +
+         (phi > 0 ? '<p class="small text-muted mt-2 mb-0">Mua thêm ' + dinhDangGia(MIEN_PHI_TU - tienHang) + ' để được miễn phí vận chuyển.</p>' : '') +
+         '<a href="giohang.html" class="btn btn-outline-secondary btn-sm mt-3">&laquo; Sửa giỏ hàng</a>';
+    document.getElementById("order-summary").innerHTML = h;
+}
+
+function hienDonThanhCong(don) {
+    document.getElementById("checkout-main").classList.add("d-none");
+    var h = '<div class="text-center mb-4"><h2 class="h3 fw-bold price-new">Đặt hàng thành công!</h2>' +
+            '<p class="mb-0">Cảm ơn bạn đã mua sắm tại SportPro. Mã đơn hàng của bạn là <strong>' + thoatHtml(don.orderId) + '</strong>.</p></div>' +
+            '<div class="row justify-content-center"><div class="col-lg-8">' +
+            '<table class="table"><tbody>' +
+            '<tr><th scope="row">Người nhận</th><td>' + thoatHtml(don.receiver) + '</td></tr>' +
+            '<tr><th scope="row">Điện thoại</th><td>' + thoatHtml(don.phone) + '</td></tr>' +
+            '<tr><th scope="row">Địa chỉ</th><td>' + thoatHtml(don.address) + '</td></tr>' +
+            '<tr><th scope="row">Thanh toán</th><td>' + thoatHtml(TEN_THANH_TOAN[don.payment]) + '</td></tr>' +
+            '<tr><th scope="row">Ngày đặt</th><td>' + new Date(don.date).toLocaleString("vi-VN") + '</td></tr>' +
+            '</tbody></table>' +
+            '<table class="table align-middle"><thead><tr><th>Sản phẩm</th><th class="text-end">Số lượng</th><th class="text-end">Thành tiền</th></tr></thead><tbody>';
+    don.items.forEach(function (d) {
+        h += '<tr><td>' + thoatHtml(d.name) + '</td><td class="text-end">' + d.qty + '</td><td class="text-end">' + dinhDangGia(d.price * d.qty) + '</td></tr>';
+    });
+    h += '</tbody><tfoot><tr><th colspan="2">Tổng thanh toán (đã gồm phí vận chuyển)</th><th class="text-end price-new">' + dinhDangGia(don.total) + '</th></tr></tfoot></table>' +
+         '<div class="d-flex justify-content-center gap-2"><a href="index.html" class="btn btn-orange">Về trang chủ</a>' +
+         '<a href="sanpham.html" class="btn btn-outline-secondary">Tiếp tục mua sắm</a></div></div></div>';
+    var vung = document.getElementById("checkout-success");
+    vung.innerHTML = h;
+    vung.classList.remove("d-none");
+}
+
+function khoiTaoThanhToan() {
+    var form = document.getElementById("checkout-form");
+    if (!form) { return; }
+
+    var nguoiDung = layNguoiDung();
+    if (!nguoiDung) {
+        hienThongBaoThanhToan("Bạn cần đăng nhập để thanh toán.", "dangnhap.html", "Đăng nhập");
+        return;
+    }
+    if (layChiTietGio().length === 0) {
+        hienThongBaoThanhToan("Giỏ hàng của bạn đang trống, chưa có gì để thanh toán.", "sanpham.html", "Tiếp tục mua hàng");
+        return;
+    }
+
+    /* Điền sẵn thông tin từ tài khoản */
+    document.getElementById("receiver").value = nguoiDung.fullname || "";
+    document.getElementById("phone").value = nguoiDung.phone || "";
+    document.getElementById("address").value = nguoiDung.address || "";
+    hienTomTatDon();
+    document.getElementById("checkout-main").classList.remove("d-none");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!layNguoiDung()) { location.href = "dangnhap.html"; return; }
+        var chon = form.querySelector('input[name="payment"]:checked');
+        var v = {
+            receiver: document.getElementById("receiver").value.trim().replace(/\s+/g, " "),
+            phone: document.getElementById("phone").value.trim(),
+            address: document.getElementById("address").value.trim(),
+            payment: chon ? chon.value : ""
+        };
+        var loi = kiemTraThanhToan(v);
+        ["receiver", "phone", "address", "payment"].forEach(function (k) {
+            var o = document.getElementById(k) || document.getElementById("pay-cod");
+            var vungLoi = document.getElementById("error-" + k);
+            if (k !== "payment") { o.classList.toggle("is-invalid", !!loi[k]); }
+            vungLoi.textContent = loi[k] || "";
+            vungLoi.classList.toggle("d-block", !!loi[k]);
+        });
+        if (Object.keys(loi).length) {
+            var dau = form.querySelector(".is-invalid");
+            if (dau) { dau.focus(); }
+            return;
+        }
+        var don = datHang(v);
+        if (!don) { location.href = "giohang.html"; return; }
+        hienDonThanhCong(don);
+        window.scrollTo(0, 0);
+    });
 }
