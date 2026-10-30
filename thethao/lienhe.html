@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ - SportPro Store</title>
+
+    <!-- CSS chung của dự án -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- CSS riêng cho trang Liên hệ -->
+    <style>
+        .b-wrap {
+            min-height: 55vh;
+        }
+
+        .b-card {
+            border: 1px solid #E9ECEF;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.055);
+        }
+
+        .b-title {
+            border-left: 4px solid #FF6A00;
+            padding-left: 14px;
+        }
+
+        .b-caption {
+            color: #666;
+        }
+
+        .invalid-feedback {
+            display: none;
+        }
+
+        .is-invalid ~ .invalid-feedback {
+            display: block;
+        }
+
+        .b-small {
+            font-size: 0.89rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1. Thanh thông báo -->
+    <div class="top-bar text-center">
+        <div class="container d-flex justify-content-between flex-wrap gap-2">
+            <span>Giao hàng miễn phí toàn quốc đơn từ 500k</span>
+            <span>Đổi trả dễ dàng trong 7 ngày</span>
+            <span>Cam kết 100% dụng cụ chính hãng</span>
+        </div>
+    </div>
+
+    <!-- 2. Thanh điều hướng -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand fw-bold fs-3"
+               style="color: #FF6A00"
+               href="index.html">
+                SportPro
+            </a>
+
+            <!-- Nút thu gọn khi xem trên điện thoại -->
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarContent"
+                    aria-controls="navbarContent"
+                    aria-expanded="false"
+                    aria-label="Mở menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <!-- Các trang chính -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Trang chủ</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           data-bs-toggle="dropdown">
+                            Dụng cụ thể thao
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="sanpham.html?loai=bongda">
+                                    Bóng đá
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="sanpham.html?loai=caulong">
+                                    Cầu lông
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="sanpham.html?loai=tennis">
+                                    Tennis
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="sanpham.html?loai=chaybo">
+                                    Chạy bộ
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="sanpham.html?loai=tapluyen">
+                                    Tập gym &amp; Yoga
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="sanpham.html">
+                                    Xem tất cả
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="tintuc.html">Tin tức</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gioithieu.html">Giới thiệu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="lienhe.html" aria-current="page">
+                            Liên hệ
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Tìm kiếm sản phẩm -->
+                <form class="d-flex me-3" action="sanpham.html" method="get">
+                    <input class="form-control me-2"
+                           type="search"
+                           name="search"
+                           aria-label="Tìm sản phẩm"
+                           placeholder="Tìm bóng, vợt, tạ...">
+                    <button class="btn btn-outline-dark" type="submit">Tìm</button>
+                </form>
+
+                <!-- Giỏ hàng và khu vực tài khoản -->
+                <div class="d-flex align-items-center gap-3">
+                    <a href="giohang.html" class="btn btn-outline-dark position-relative">
+                        Giỏ hàng
+                        <span id="cart-count"
+                              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
+
+                    <div id="user-area" class="d-flex gap-2">
+                        <a href="dangnhap.html" class="btn btn-orange btn-sm">
+                            Đăng nhập
+                        </a>
+                        <a href="dangky.html" class="btn btn-outline-secondary btn-sm">
+                            Đăng ký
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 3. Nội dung trang Liên hệ -->
+    <main class="container my-5 b-wrap">
+        <h1 class="b-title h3">Liên hệ SportPro Store</h1>
+        <p class="b-caption">
+            Trang thông tin và biểu mẫu góp ý phục vụ bài tập lớn của nhóm 13.
+        </p>
+
+        <div class="row g-4">
+            <!-- Thông tin cửa hàng -->
+            <div class="col-md-5">
+                <div class="b-card p-4 h-100">
+                    <h2 class="h5">Thông tin liên hệ</h2>
+
+                    <p>
+                        Website: SportPro Store — Đề tài 26,
+                        môn Hệ thống và Công nghệ Web, IUH.
+                    </p>
+
+                    <p>
+                        Đây là website mô phỏng, chưa cung cấp địa chỉ,
+                        số điện thoại hoặc email dịch vụ chính thức.
+                    </p>
+
+                    <a href="sanpham.html" class="btn btn-orange">
+                        Xem dụng cụ thể thao
+                    </a>
+                </div>
+            </div>
+
+            <!-- Biểu mẫu phản hồi -->
+            <div class="col-md-7">
+                <div class="b-card p-4">
+                    <h2 class="h5">Gửi phản hồi</h2>
+
+                    <form id="contact-form" novalidate>
+                        <!-- Họ tên -->
+                        <div class="mb-3">
+                            <label class="form-label" for="contact-name">Họ tên</label>
+                            <input class="form-control"
+                                   type="text"
+                                   id="contact-name"
+                                   name="name"
+                                   required
+                                   minlength="2">
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label class="form-label" for="contact-email">Email</label>
+                            <input class="form-control"
+                                   type="email"
+                                   id="contact-email"
+                                   name="email"
+                                   required>
+                        </div>
+
+                        <!-- Nội dung cần gửi -->
+                        <div class="mb-3">
+                            <label class="form-label" for="contact-message">Nội dung</label>
+                            <textarea class="form-control"
+                                      id="contact-message"
+                                      name="message"
+                                      rows="5"
+                                      required
+                                      minlength="10"></textarea>
+                        </div>
+
+                        <!-- Thông báo kết quả kiểm tra -->
+                        <div id="contact-notice" role="status" aria-live="polite"></div>
+
+                        <button type="submit" class="btn btn-orange mt-3">
+                            Kiểm tra nội dung
+                        </button>
+                    </form>
+
+                    <p class="small text-muted mt-2">
+                        Bản demo chưa có máy chủ nhận thư;
+                        nội dung nhập không được gửi hoặc lưu.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 4. Chân trang -->
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">
+                <!-- Giới thiệu cửa hàng -->
+                <div class="col-md-3 mb-3">
+                    <h5 class="fw-bold" style="color: #FF6A00">SportPro Store</h5>
+                    <p class="small text-secondary">
+                        Cung cấp dụng cụ, thiết bị thể thao phục vụ
+                        luyện tập và thi đấu.
+                    </p>
+                </div>
+
+                <!-- Chính sách -->
+                <div class="col-md-3 mb-3">
+                    <h6>Chính sách</h6>
+                    <p class="small text-secondary">
+                        Giao hàng và đổi trả theo thông tin của cửa hàng.
+                    </p>
+                </div>
+
+                <!-- Liên kết nhanh -->
+                <div class="col-md-3 mb-3">
+                    <h6>Liên kết nhanh</h6>
+                    <ul class="list-unstyled small">
+                        <li><a href="sanpham.html">Sản phẩm</a></li>
+                        <li><a href="gioithieu.html">Giới thiệu</a></li>
+                        <li><a href="lienhe.html">Liên hệ</a></li>
+                        <li><a href="sitemap.html">Sơ đồ Website</a></li>
+                    </ul>
+                </div>
+
+                <!-- Thông tin môn học -->
+                <div class="col-md-3 mb-3">
+                    <h6>Thông tin</h6>
+                    <p class="small">
+                        Bài tập lớn Hệ thống và Công nghệ Web — IUH.
+                    </p>
+                </div>
+            </div>
+
+            <hr>
+            <p class="text-center small text-muted mb-0">
+                Bố cục tham khảo từ maxxsport.com.vn, đã chỉnh sửa.
+            </p>
+        </div>
+    </footer>
+
+    <!-- 5. JavaScript xử lý form -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('contact-form');
+            const notice = document.getElementById('contact-notice');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                if (!form.checkValidity()) {
+                    form.classList.add('was-validated');
+                    notice.className = 'alert alert-danger';
+                    notice.textContent =
+                        'Vui lòng điền đúng họ tên, email và nội dung (ít nhất 10 ký tự).';
+                    return;
+                }
+
+                notice.className = 'alert alert-info';
+                notice.textContent =
+                    'Nội dung hợp lệ. Đây là bản demo không có chức năng gửi thư thực tế.';
+            });
+        });
+    </script>
+
+    <!-- Bootstrap và tính năng navbar dùng chung -->
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="js/common.js"></script>
+</body>
+
+</html>
