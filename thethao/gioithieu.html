@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Giới thiệu - SportPro Store</title>
+
+        <!-- Bootstrap và CSS dùng chung của nhóm -->
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/style.css">
+
+        <!-- CSS riêng cho trang giới thiệu -->
+        <style>
+            .intro-wrap {
+                min-height: 55vh;
+            }
+
+            .intro-heading {
+                border-left: 4px solid #FF6A00;
+                padding-left: 14px;
+            }
+
+            .intro-lead {
+                max-width: 760px;
+                color: #5C6268;
+            }
+
+            .intro-panel {
+                background-color: #F5F7FA;
+                border: 1px solid #E9ECEF;
+                border-radius: 12px;
+            }
+
+            .intro-card {
+                height: 100%;
+                padding: 24px;
+                background-color: #FFFFFF;
+                border: 1px solid #E9ECEF;
+                border-radius: 12px;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.055);
+            }
+
+            .intro-card h3 {
+                color: #2D2D2D;
+            }
+
+            .intro-number {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 40px;
+                height: 40px;
+                padding: 0 8px;
+                border-radius: 10px;
+                background-color: #FF6A00;
+                color: #FFFFFF;
+                font-weight: 700;
+            }
+
+            .member-role {
+                color: #B34B00;
+                font-weight: 600;
+            }
+
+            .intro-link {
+                color: #B34B00;
+            }
+
+            .intro-link:hover {
+                color: #8A3900;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- 1. Thanh thông báo trên cùng -->
+        <div class="top-bar text-center">
+            <div class="container d-flex justify-content-between flex-wrap gap-2">
+                <span>Giao hàng miễn phí toàn quốc đơn từ 500k</span>
+                <span>Đổi trả dễ dàng trong 7 ngày</span>
+                <span>Cam kết 100% dụng cụ chính hãng</span>
+            </div>
+        </div>
+
+        <!-- 2. Menu điều hướng chung -->
+        <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+            <div class="container">
+                <a class="navbar-brand fw-bold fs-3" style="color: #FF6A00" href="index.html">
+                    SportPro
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false" aria-label="Mở menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <!-- Menu chính -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Trang chủ</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                Dụng cụ thể thao
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="sanpham.html?loai=bongda">Bóng đá</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="sanpham.html?loai=caulong">Cầu lông</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="sanpham.html?loai=tennis">Tennis</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="sanpham.html?loai=chaybo">Chạy bộ</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="sanpham.html?loai=tapluyen">Tập gym &amp; Yoga</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="sanpham.html">Xem tất cả</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="tintuc.html">Tin tức</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="gioithieu.html" aria-current="page">Giới thiệu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="lienhe.html">Liên hệ</a>
+                        </li>
+                    </ul>
+
+                    <!-- Form tìm kiếm -->
+                    <form class="d-flex me-3" action="sanpham.html" method="get">
+                        <input class="form-control me-2" type="search" name="search" aria-label="Tìm sản phẩm"
+                            placeholder="Tìm bóng, vợt, tạ...">
+                        <button class="btn btn-outline-dark" type="submit">Tìm</button>
+                    </form>
+
+                    <!-- Giỏ hàng và tài khoản -->
+                    <div class="d-flex align-items-center gap-3">
+                        <a href="giohang.html" class="btn btn-outline-dark position-relative">
+                            Giỏ hàng
+                            <span id="cart-count"
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </a>
+                        <div id="user-area" class="d-flex gap-2">
+                            <a href="dangnhap.html" class="btn btn-orange btn-sm">Đăng nhập</a>
+                            <a href="dangky.html" class="btn btn-outline-secondary btn-sm">Đăng ký</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 3. Nội dung giới thiệu cửa hàng và nhóm thực hiện -->
+        <main class="container my-5 intro-wrap">
+            <nav aria-label="Đường dẫn trang">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="intro-link" href="index.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Giới thiệu</li>
+                </ol>
+            </nav>
+
+            <!-- Giới thiệu website -->
+            <section class="mb-5" aria-labelledby="about-title">
+                <h1 id="about-title" class="intro-heading h3 mb-3">Giới thiệu SportPro Store</h1>
+
+                <p class="intro-lead fs-5 mb-4">
+                    SportPro Store là website giới thiệu và mô phỏng bán dụng cụ,
+                    thiết bị thể thao trực tuyến, được xây dựng trong khuôn khổ
+                    bài tập lớn môn Hệ thống và Công nghệ Web tại IUH.
+                </p>
+
+                <div class="intro-panel p-4">
+                    <h2 class="h5 fw-bold mb-3">SportPro mang đến điều gì?</h2>
+                    <p class="mb-3">
+                        Website giúp người dùng tìm hiểu các nhóm dụng cụ luyện tập,
+                        xem chi tiết sản phẩm và thực hiện quy trình mua hàng mô phỏng.
+                        Sản phẩm tập trung vào dụng cụ và thiết bị thể thao,
+                        không phải quần áo thể thao.
+                    </p>
+                    <p class="mb-0">
+                        Giao diện sử dụng HTML5, CSS3, Bootstrap 5 và JavaScript.
+                        Dữ liệu mẫu được lưu trên trình duyệt bằng LocalStorage
+                        để phục vụ học tập; website chưa kết nối máy chủ bán hàng thực tế.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Các danh mục hiện có -->
+            <section class="mb-5" aria-labelledby="category-title">
+                <h2 id="category-title" class="intro-heading h4 mb-4">Danh mục dụng cụ thể thao</h2>
+
+                <div class="row g-3">
+                    <div class="col-sm-6 col-lg-4">
+                        <article class="intro-card">
+                            <span class="intro-number mb-3">01</span>
+                            <h3 class="h5 fw-bold">Bóng đá</h3>
+                            <p class="text-secondary mb-3">Dụng cụ phục vụ luyện tập và thi đấu bóng đá.</p>
+                            <a class="intro-link fw-semibold" href="sanpham.html?loai=bongda">Xem sản phẩm</a>
+                        </article>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-4">
+                        <article class="intro-card">
+                            <span class="intro-number mb-3">02</span>
+                            <h3 class="h5 fw-bold">Cầu lông</h3>
+                            <p class="text-secondary mb-3">Vợt, cầu và những dụng cụ dành cho bộ môn cầu lông.</p>
+                            <a class="intro-link fw-semibold" href="sanpham.html?loai=caulong">Xem sản phẩm</a>
+                        </article>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-4">
+                        <article class="intro-card">
+                            <span class="intro-number mb-3">03</span>
+                            <h3 class="h5 fw-bold">Tennis</h3>
+                            <p class="text-secondary mb-3">Dụng cụ giúp người chơi tập luyện và thi đấu tennis.</p>
+                            <a class="intro-link fw-semibold" href="sanpham.html?loai=tennis">Xem sản phẩm</a>
+                        </article>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-6">
+                        <article class="intro-card">
+                            <span class="intro-number mb-3">04</span>
+                            <h3 class="h5 fw-bold">Chạy bộ</h3>
+                            <p class="text-secondary mb-3">Thiết bị, phụ kiện hỗ trợ quá trình luyện tập chạy bộ.</p>
+                            <a class="intro-link fw-semibold" href="sanpham.html?loai=chaybo">Xem sản phẩm</a>
+                        </article>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-6">
+                        <article class="intro-card">
+                            <span class="intro-number mb-3">05</span>
+                            <h3 class="h5 fw-bold">Gym &amp; Yoga</h3>
+                            <p class="text-secondary mb-3">Tạ, thảm tập và dụng cụ phục vụ rèn luyện thể chất.</p>
+                            <a class="intro-link fw-semibold" href="sanpham.html?loai=tapluyen">Xem sản phẩm</a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Danh sách thành viên đúng phân công nhóm -->
+            <section class="mb-5" aria-labelledby="team-title">
+                <h2 id="team-title" class="intro-heading h4 mb-3">Nhóm thực hiện — Nhóm 13</h2>
+                <p class="text-secondary mb-4">
+                    Môn Hệ thống và Công nghệ Web — Khoa Công nghệ Thông tin,
+                    Trường Đại học Công nghiệp TP. Hồ Chí Minh (IUH).
+                </p>
+
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <article class="intro-card">
+                            <h3 class="h5 fw-bold">Khang</h3>
+                            <p class="member-role mb-2">Thành viên A — Khung website và sản phẩm</p>
+                            <p class="mb-2">MSSV: <strong>22647901</strong></p>
+                            <p class="small text-secondary mb-0">
+                                Trang chủ, danh sách và chi tiết sản phẩm;
+                                CSS chung, dữ liệu và xử lý sản phẩm.
+                            </p>
+                        </article>
+                    </div>
+
+                    <div class="col-md-4">
+                        <article class="intro-card">
+                            <h3 class="h5 fw-bold">Châu</h3>
+                            <p class="member-role mb-2">Thành viên B — Tài khoản và thành viên</p>
+                            <p class="mb-2">MSSV: <strong>22671351</strong></p>
+                            <p class="small text-secondary mb-0">
+                                Đăng ký, đăng nhập, giới thiệu, liên hệ;
+                                quản lý tài khoản và cập nhật navbar.
+                            </p>
+                        </article>
+                    </div>
+
+                    <div class="col-md-4">
+                        <article class="intro-card">
+                            <h3 class="h5 fw-bold">Huy</h3>
+                            <p class="member-role mb-2">Thành viên C — Giỏ hàng, tin tức và sơ đồ</p>
+                            <p class="mb-2">MSSV: <strong>25713091</strong></p>
+                            <p class="small text-secondary mb-0">
+                                Giỏ hàng, thanh toán, tin tức,
+                                chi tiết tin tức và sơ đồ website.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Liên kết chuyển trang và ghi nguồn -->
+            <section class="intro-panel p-4" aria-labelledby="next-title">
+                <h2 id="next-title" class="h5 fw-bold mb-3">Khám phá SportPro Store</h2>
+                <p class="mb-3">
+                    Xem các danh mục dụng cụ hoặc liên hệ với nhóm thực hiện
+                    để tìm hiểu thêm về website.
+                </p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a class="btn btn-orange" href="sanpham.html">Khám phá sản phẩm</a>
+                    <a class="btn btn-outline-dark" href="lienhe.html">Trang liên hệ</a>
+                </div>
+                <p class="small text-secondary mt-4 mb-0">
+                    Ghi nguồn: Bố cục tham khảo từ maxxsport.com.vn, đã chỉnh sửa.
+                </p>
+            </section>
+        </main>
+
+        <!-- 4. Footer chung -->
+        <footer class="mt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <h5 class="fw-bold" style="color: #FF6A00">SportPro Store</h5>
+                        <p class="small text-secondary">
+                            Cung cấp dụng cụ, thiết bị thể thao phục vụ luyện tập và thi đấu.
+                        </p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <h6>Chính sách</h6>
+                        <p class="small text-secondary">
+                            Giao hàng và đổi trả theo thông tin của cửa hàng.
+                        </p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <h6>Liên kết nhanh</h6>
+                        <ul class="list-unstyled small">
+                            <li><a href="sanpham.html">Sản phẩm</a></li>
+                            <li><a href="gioithieu.html">Giới thiệu</a></li>
+                            <li><a href="lienhe.html">Liên hệ</a></li>
+                            <li><a href="sitemap.html">Sơ đồ Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <h6>Thông tin</h6>
+                        <p class="small">Bài tập lớn Hệ thống và Công nghệ Web — IUH.</p>
+                    </div>
+                </div>
+                <hr>
+                <p class="text-center small text-muted mb-0">
+                    Bố cục tham khảo từ maxxsport.com.vn, đã chỉnh sửa.
+                </p>
+            </div>
+        </footer>
+
+        <!-- 5. JavaScript: trang tĩnh chỉ cần common.js -->
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script src="js/common.js"></script>
+    </body>
+
+</html>
